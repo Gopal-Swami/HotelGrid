@@ -1,0 +1,70 @@
+import bcrypt from 'bcryptjs';
+const users = [
+  {
+    firstName: 'Admin',
+    lastName: 'User',
+    username: 'AdminUser',
+    email: 'admin@example.com',
+    phoneNumber: 9876543215,
+    profileUrl: 'NewUser.jpg',
+    address: {
+      addressline1: 'New Node Street',
+      city: 'Kolkata',
+      postalCode: '2541365',
+      state: 'West Bengal',
+      country: 'India',
+    },
+    password: bcrypt.hashSync('123456', 10),
+    isAdmin: true,
+  },
+  {
+    firstName: 'John',
+    lastName: 'Doe',
+    username: 'JohnDoe',
+    email: 'john@example.com',
+    phoneNumber: 9988776655,
+    profileUrl: 'JohnDoe.jpg',
+    address: {
+      addressline1: 'New Node Street',
+      city: 'Bikaner',
+      postalCode: '334656',
+      state: 'Rajasthan',
+      country: 'India',
+    },
+    password: bcrypt.hashSync('12345', 10),
+  },
+  {
+    firstName: 'Jane',
+    lastName: 'Doe',
+    username: 'JaneDoe',
+    email: 'Jane@example.com',
+    phoneNumber: 7788776655,
+    profileUrl: 'JaneDoe.jpg',
+    address: {
+      addressline1: 'Old Node Street',
+      city: 'Howrah',
+      postalCode: '365145',
+      state: 'West Bengal',
+      country: 'India',
+    },
+    password: bcrypt.hashSync('12345', 10),
+  },
+  {
+    firstName: 'Moore',
+    lastName: 'Mo',
+    username: 'MooreMo',
+    email: 'Moore@example.com',
+    phoneNumber: 7788996655,
+    profileUrl: 'MooreMo.jpg',
+    address: {
+      addressline1: 'Old Express Street',
+      city: 'kolkata',
+      postalCode: '369145',
+      state: 'West Bengal',
+      country: 'India',
+    },
+    password: bcrypt.hashSync('12345', 10),
+  },
+];
+
+export default users;
