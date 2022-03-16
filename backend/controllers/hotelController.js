@@ -1,6 +1,5 @@
 import asyncHandler from 'express-async-handler';
 import Hotel from '../models/Hotel.js';
-import User from '../models/User.js';
 
 // @desc fetch all Hotels
 // @route GET api/v1/hotels
