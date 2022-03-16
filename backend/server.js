@@ -7,6 +7,7 @@ import colors from 'colors';
 import userRoutes from './routes/userRoutes.js';
 import hotelRoutes from './routes/hotelRoutes.js';
 import gallaryRoutes from './routes/gallaryRoutes.js';
+import bookingRoutes from './routes/bookingRoutes.js';
 // import uploadRoutes from './routes/fileUploadRoutes.js';
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
 import path from 'path';
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/hotels', hotelRoutes);
 app.use('/api/v1/gallary', gallaryRoutes);
+app.use('/api/v1/bookings', bookingRoutes);
 // app.use('/api/upload', uploadRoutes);
 
 app.get('/', (req, res) => {
