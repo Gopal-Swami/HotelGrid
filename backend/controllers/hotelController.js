@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Hotel from '../models/Hotel.js';
+let hotelAvatar = '..HotelGridfrontend\\public\\images\\hotelImage.jpg';
 
 // @desc fetch all Hotels
 // @route GET api/v1/hotels
@@ -104,6 +105,7 @@ const createHotel = asyncHandler(async (req, res) => {
       },
     ],
     isBlocked: true,
+    hotelPhotoUrl: hotelAvatar,
   });
 
   const createdHotel = await hotel.save();
@@ -122,6 +124,7 @@ const updateHotel = asyncHandler(async (req, res) => {
       req.body.hotelDescription || hotel.hotelDescription;
     hotel.address = req.body.address || hotel.address;
     hotel.availability = req.body.availability || hotel.availability;
+    hotel.hotelPhotoUrl = req.file ? req.file.path : hotelAvatar;
     const updatedHotel = await hotel.save();
     res.json(updatedHotel);
   } else {

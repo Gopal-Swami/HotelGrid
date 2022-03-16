@@ -55,6 +55,7 @@ const hotelSchema = mongoose.Schema(
       },
     ],
     reviews: [reviewSchema],
+    gallary: [],
     rating: {
       type: Number,
       required: true,

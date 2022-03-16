@@ -15,8 +15,8 @@ import { protect, admin, owner } from '../middlewares/authMiddleware.js';
 import { upload } from '../controllers/fileUploadController.js';
 
 router.route('/').get(getHotels);
-router.route('/admin').post(protect, admin, createHotel);
-router.route('/owner').post(protect, owner, createHotel);
+router.route('/admin').post(protect, admin, upload.single('file'), createHotel);
+router.route('/owner').post(protect, owner, upload.single('file'), createHotel);
 router.route('/user/:id').get(protect, owner, getUserHotels);
 router.route('/:id/reviews').post(protect, createHotelReview);
 router.get('/top', getTopHotels);

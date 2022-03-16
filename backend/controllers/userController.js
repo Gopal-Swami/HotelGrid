@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/User.js';
 import generateToken from '../utils/generateTokes.js';
-
+let avatar = '..HotelGridfrontend\\public\\images\\avatar.jpg';
 // @desc Login user & get token
 // @route POST /api/v1/users/login
 // @access public
@@ -61,7 +61,7 @@ const registerUser = asyncHandler(async (req, res) => {
     username,
     email,
     phoneNumber,
-    profileUrl: req.file.path ? req.file.path : '',
+    profileUrl: req.file ? req.file.path : avatar,
     address,
     password,
   });
@@ -83,19 +83,21 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
+
   if (user) {
     user.firstName = req.body.firstName || user.firstName;
     user.lastName = req.body.lastName || user.lastName;
     user.email = req.body.email || user.email;
     user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
     user.address = req.body.address || user.address;
-    user.profileUrl = req.file.path ? req.file.path : user.profileUrl;
+    user.profileUrl = req.file ? req.file.path : avatar;
+
     if (req.body.password) {
       user.password = req.body.password;
     }
     const updatedUser = await user.save();
     res.json({
-      user: updateUser,
+      user: updatedUser,
       token: generateToken(updatedUser._id),
     });
   } else {
@@ -160,7 +162,7 @@ const updateUser = asyncHandler(async (req, res) => {
     user.isAdmin = req.body.isAdmin || user.isAdmin;
     user.isBlocked = req.body.isBlocked || user.isBlocked;
     user.isOwner = req.body.isOwner || user.isOwner;
-    user.profileUrl = req.file.path ? req.file.path : user.profileUrl;
+    user.profileUrl = req.file ? req.file.path : user.profileUrl;
     if (req.body.password) {
       user.password = req.body.password;
     }
