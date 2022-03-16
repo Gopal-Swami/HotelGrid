@@ -21,8 +21,12 @@ router.route('/user/:id').get(protect, owner, getUserHotels);
 router.route('/:id/reviews').post(protect, createHotelReview);
 router.get('/top', getTopHotels);
 router.route('/:id').get(getHotelById).delete(protect, admin, deleteHotel);
-router.route('/:id/admin').put(protect, admin, updateHotel);
-router.route('/:id/owner').put(protect, owner, updateHotel);
+router
+  .route('/:id/admin')
+  .put(protect, admin, upload.single('file'), updateHotel);
+router
+  .route('/:id/owner')
+  .put(protect, owner, upload.single('file'), updateHotel);
 router.route('/:id/block').put(protect, admin, blockHotel);
 
 export default router;

@@ -8,9 +8,7 @@ import generateToken from '../utils/generateTokes.js';
 
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
   const user = await User.findOne({ email });
-
   if (user && (await user.matchPassword(password))) {
     res.json({
       user: user,
@@ -42,14 +40,31 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @access Public
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { email } = req.body;
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    phoneNumber,
+    address,
+    password,
+  } = req.body;
   const userExists = await User.findOne({ email });
   if (userExists) {
     res.status(400);
     throw new Error('User already exists');
   }
 
-  const user = await User.create(req.body);
+  const user = await User.create({
+    firstName,
+    lastName,
+    username,
+    email,
+    phoneNumber,
+    profileUrl: req.file.path ? req.file.path : '',
+    address,
+    password,
+  });
 
   if (user) {
     res.status(201).json({

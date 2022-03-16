@@ -11,19 +11,24 @@ import {
   updateUser,
 } from '../controllers/userController.js';
 import { protect, admin } from '../middlewares/authMiddleware.js';
+import { upload } from '../controllers/fileUploadController.js';
+
 const router = express.Router();
 
-router.route('/').post(registerUser).get(protect, admin, getUsers);
-router.post('/login', loginUser);
+router
+  .route('/')
+  .post(upload.single('file'), registerUser)
+  .get(protect, admin, getUsers);
+router.post('/login', upload.single('file'), loginUser);
 router
   .route('/profile')
   .get(protect, getUserProfile)
-  .put(protect, updateUserProfile);
+  .put(protect, upload.single('file'), updateUserProfile);
 
 router
   .route('/:id')
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
-  .put(protect, admin, updateUser);
+  .put(protect, admin, upload.single('file'), updateUser);
 
 export default router;
