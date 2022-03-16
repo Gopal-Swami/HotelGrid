@@ -83,13 +83,13 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-
   if (user) {
     user.firstName = req.body.firstName || user.firstName;
     user.lastName = req.body.lastName || user.lastName;
     user.email = req.body.email || user.email;
     user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
     user.address = req.body.address || user.address;
+    user.profileUrl = req.file.path ? req.file.path : user.profileUrl;
     if (req.body.password) {
       user.password = req.body.password;
     }
@@ -160,6 +160,7 @@ const updateUser = asyncHandler(async (req, res) => {
     user.isAdmin = req.body.isAdmin || user.isAdmin;
     user.isBlocked = req.body.isBlocked || user.isBlocked;
     user.isOwner = req.body.isOwner || user.isOwner;
+    user.profileUrl = req.file.path ? req.file.path : user.profileUrl;
     if (req.body.password) {
       user.password = req.body.password;
     }
