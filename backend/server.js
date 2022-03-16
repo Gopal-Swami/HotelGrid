@@ -5,6 +5,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import colors from 'colors';
 import userRoutes from './routes/userRoutes.js';
+import hotelRoutes from './routes/hotelRoutes.js';
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
 
 dotenv.config();
@@ -18,6 +19,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json());
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/hotels', hotelRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running');

@@ -4,7 +4,6 @@ import asyncHandler from 'express-async-handler';
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
-
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
@@ -36,4 +35,13 @@ const admin = (req, res, next) => {
   }
 };
 
-export { protect, admin };
+const owner = (req, res, next) => {
+  if (req.user && req.user.isOwner) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error('Not Authorized As An Owner');
+  }
+};
+
+export { protect, admin, owner };
