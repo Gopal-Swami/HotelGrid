@@ -1,31 +1,29 @@
 import mongoose from 'mongoose';
 
-const enquirySchema = mongoose.Schema(
+const respondSchema = mongoose.Schema(
   {
     hotel: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'Hotel',
     },
-    username: {
+    hotelName: {
       type: String,
       required: true,
     },
-    userEmail: {
+    hotelPhotoUrl: {
       type: String,
+      required: true,
     },
     message: {
       type: String,
       required: [true, 'Please Add Valid Message'],
     },
-    isResponded: {
-      type: Boolean,
-      default: false,
-    },
+    enquiryMessage: {},
   },
   { timestamps: true }
 );
 
-const Enquiry = mongoose.model('Enquiry', enquirySchema);
+const Respond = mongoose.model('Respond', respondSchema);
 
-export default Enquiry;
+export default Respond;

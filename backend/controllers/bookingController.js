@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import Hotel from '../models/Hotel.js';
 import Booking from '../models/Booking.js';
+import User from '../models/User.js';
 import Notification from '../models/Notification.js';
 
 // @desc fetch all Bookings
@@ -45,6 +46,19 @@ const getBookingById = asyncHandler(async (req, res) => {
 // @access private owner
 const getOwnerBookings = asyncHandler(async (req, res) => {
   const bookings = await Booking.find({ hotelOwner: req.params.id });
+  if (bookings) {
+    res.json(bookings);
+  } else {
+    res.status(404);
+    throw new Error('Bookings not found');
+  }
+});
+
+// @desc fetch  bookings by user
+// @route GET api/v1/bookings/user/:id
+// @access private owner
+const getUserBookings = asyncHandler(async (req, res) => {
+  const bookings = await Booking.find({ user: req.params.id });
   if (bookings) {
     res.json(bookings);
   } else {
@@ -110,4 +124,158 @@ const createBooking = asyncHandler(async (req, res) => {
   res.status(201).json(createdBooking);
 });
 
-export { getBookings, getBookingById, getOwnerBookings, createBooking };
+// @desc payment update booking
+// @route PUT api/v1/bookings/payment/:id
+// @access Private
+
+const updatePayment = asyncHandler(async (req, res) => {
+  const booking = await Booking.findById(req.params.id);
+  const hotel = await Hotel.findById(booking.hotel);
+  if (booking && !booking.isPaid) {
+    booking.isPaid = true;
+    booking.paidAt = Date.now();
+    booking.paymentMethod = req.body.paymentMethod;
+    booking.paymentResult = {
+      id: req.body.id,
+      status: req.body.status,
+      update_time: req.body.update_time,
+      email_address: req.body.payer.email_address,
+    };
+    booking.booked = true;
+    const notificationOfBooking = new Notification({
+      sender: hotel._id,
+      senderImage: hotel.hotelPhotoUrl,
+      receiver: req.user._id,
+      message: {
+        subject: 'Hurree Booking Confirmed',
+        message: `Greetings From ${hotel.hotelName} !
+        Dear ${req.user.firstName} ${req.user.lastName}
+        Your payment was successful for Rupeee ${booking.totalPrice} via ${req.body.paymentMethod}.
+        Your Booking has confirmed.
+        Regards,
+        ${hotel.hotelName}
+        `,
+      },
+    });
+    const notificationSent = await notificationOfBooking.save();
+    const updatedBooking = await booking.save();
+    res.status(201).json(updatedBooking);
+  } else {
+    res.status(404);
+    throw new Error('Booking not found');
+  }
+});
+
+// @desc update checkin status of booking
+// @route PUT api/v1/bookings/checkin/:id
+// @access Private owner
+const updateCheckInStatus = asyncHandler(async (req, res) => {
+  const booking = await Booking.findById(req.params.id);
+  if (booking) {
+    booking.isCheckedIn = true;
+    const updatedBooking = await booking.save();
+    res.status(201).json(updatedBooking);
+  } else {
+    res.status(404);
+    throw new Error('Booking Not Found');
+  }
+});
+
+// @desc update check out status of booking
+// @route PUT api/v1/bookings/checkout/:id
+// @access Private
+const updateCheckOutStatus = asyncHandler(async (req, res) => {
+  const booking = await Booking.findById(req.params.id);
+  if (booking) {
+    booking.isCheckedOut = true;
+    const updatedBooking = await booking.save();
+    res.status(201).json(updatedBooking);
+  } else {
+    res.status(404);
+    throw new Error('Booking Not Found');
+  }
+});
+
+// @desc update refund status of booking
+// @route PUT api/v1/bookings/refund/:id
+// @access Owner
+const updateRefundStatus = asyncHandler(async (req, res) => {
+  const booking = await Booking.findById(req.params.id);
+  const hotel = await Hotel.findById(booking.hotel);
+  const user = await User.findById(booking.user);
+
+  if (booking) {
+    booking.isRefundCompleted = true;
+    const notificationOfBooking = new Notification({
+      sender: hotel._id,
+      senderImage: hotel.hotelPhotoUrl,
+      receiver: booking.user,
+      message: {
+        subject: 'Refund Processed :)',
+        message: `
+        Dear ${user.firstName} ${user.lastName}
+        Your refund has processed for Rupeee ${booking.totalPrice}.
+        
+        We look forward to see you soon :)
+        Regards,
+        ${hotel.hotelName}
+        `,
+      },
+    });
+    const notificationSent = await notificationOfBooking.save();
+    const updatedBooking = await booking.save();
+    res.status(201).json(updatedBooking);
+  } else {
+    res.status(404);
+    throw new Error('Booking Not Found');
+  }
+});
+
+// @desc cancel booking
+// @route PUT api/v1/bookings/cancel/:id
+// @access Private
+const cancelBooking = asyncHandler(async (req, res) => {
+  const booking = await Booking.findById(req.params.id);
+  const hotel = await Hotel.findById(booking.hotel);
+
+  if (booking) {
+    booking.isCancelled = true;
+
+    const notificationOfBooking = new Notification({
+      sender: hotel._id,
+      senderImage: hotel.hotelPhotoUrl,
+      receiver: req.user._id,
+      message: {
+        subject: 'Booking Cancelled',
+        message: `
+        Dear ${req.user.firstName} ${req.user.lastName}
+        Your boking has cancelled and your refund will be credited within 2 Days.
+        Refund Ammount : ${booking.totalPrice}.
+        
+        Will miss you :( 
+        ${hotel.hotelName}
+        `,
+      },
+    });
+    const notificationSent = await notificationOfBooking.save();
+    const updatedBooking = await booking.save();
+    res.status(201).json(updatedBooking);
+  } else {
+    res.status(404);
+    throw new Error('Booking Not Found');
+  }
+});
+
+export {
+  getBookings,
+  getBookingById,
+  getOwnerBookings,
+  getUserBookings,
+  createBooking,
+  updatePayment,
+  updateCheckInStatus,
+  updateCheckOutStatus,
+  updateRefundStatus,
+  cancelBooking,
+  deleteBooking,
+};

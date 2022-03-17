@@ -8,6 +8,7 @@ import userRoutes from './routes/userRoutes.js';
 import hotelRoutes from './routes/hotelRoutes.js';
 import gallaryRoutes from './routes/gallaryRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
+import enquiryRoutes from './routes/enquiryRoutes.js';
 // import uploadRoutes from './routes/fileUploadRoutes.js';
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
 import path from 'path';
@@ -26,6 +27,8 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/hotels', hotelRoutes);
 app.use('/api/v1/gallary', gallaryRoutes);
 app.use('/api/v1/bookings', bookingRoutes);
+app.use('/api/v1/enquiries', enquiryRoutes);
+
 // app.use('/api/upload', uploadRoutes);
 
 app.get('/', (req, res) => {
