@@ -1,5 +1,30 @@
+/* 
+
+Text Color on White = #282750
+Danger Color #FF3F59
+Warning Color #FFB830
+Primary Color #3DB2FF
+
+
+*/
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+/* Font Icons Color */
+i {
+  color: #282750;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  letter-spacing: 5px;
 }
