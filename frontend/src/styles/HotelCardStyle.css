@@ -1,0 +1,98 @@
+/* Hotel Card Style */
+.top-hotels-at-landing-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0rem 2rem;
+  min-width: 100vw;
+}
+
+.hotel-card {
+  border: 1px solid #000;
+  display: flex;
+  width: 70vw;
+  margin: 1rem 1rem;
+  box-shadow: 2px 2px 10px #000;
+  color: #000;
+}
+
+.hotel-card:hover {
+  color: #ff6a3d;
+}
+
+.hotel-card:nth-child(1) {
+  margin-left: -10rem;
+}
+
+.hotel-card:nth-child(2) {
+  margin-right: -10rem;
+}
+
+.hotel-card:nth-child(3) {
+  margin-left: -10rem;
+}
+
+.hotel-card:nth-child(4) {
+  margin-right: -10rem;
+}
+
+.hotel-card:nth-child(5) {
+  margin-left: -10rem;
+}
+
+.hotel-card-image {
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.hotel-card-image img {
+  width: 15rem;
+}
+
+.hotel-card-details {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hotel-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0rem 4rem;
+}
+
+.hotel-card-actions a {
+  padding: 0.5rem 2rem;
+  background: #ff6a3d;
+  color: #000;
+  transition: background 0.5s ease;
+}
+
+.hotel-card-actions a:hover {
+  background: #1a2238;
+  color: #fff;
+}
+
+/* Media Query for card */
+
+@media screen and (max-width: 995px) {
+  .hotel-card {
+    width: 95vw;
+    margin: 1rem 0rem !important;
+  }
+}
+
+@media screen and (max-width: 686px) {
+  .hotel-card-image {
+    padding: 0;
+  }
+  .hotel-card-image img {
+    width: 30rem;
+  }
+  .hotel-card {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
