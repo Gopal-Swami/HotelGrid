@@ -17,11 +17,7 @@ const NavigationBar = () => {
           <label htmlFor="nav-menu" className="navigation-menu-wrapper">
             <i className="fa-solid fa-bars"></i>
           </label>
-          <input
-            type="checkbox"
-            className="navigation-menu-wrapper"
-            id="nav-menu"
-          />
+          <input type="checkbox" className="nav-menu" id="nav-menu" />
           <ul className="navigation-buttons">
             <li>
               <Link to="/">Register Hotel</Link>
