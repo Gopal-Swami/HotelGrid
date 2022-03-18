@@ -4,9 +4,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #282750;
+  border-bottom: 2px solid #1a2238;
   padding: 0.5rem 0rem;
   max-height: 10vh;
+  background: #1a2238;
 }
 
 #logo {
@@ -37,31 +38,26 @@
 
 .navigation-buttons li {
   padding: 0.5rem 1rem;
-  color: #282750;
   text-decoration: none;
   margin: 0rem 0.5rem;
   transition: background 0.5s ease;
 }
 
 .navigation-buttons li:hover {
-  background: #3db2ff;
   color: #fff;
   cursor: pointer;
+  border-bottom: 3px solid #f4db7d;
 }
 
 .navigation-right-most-button button {
   background: transparent;
   border: none;
+  color: #fff;
   letter-spacing: 5px;
 }
 
-.navigation-right-most-button button:hover {
-  color: #fff;
-  cursor: pointer;
-}
-
 .navigation-right-most-button {
-  background: #3db2ff;
+  background: #ff6a3d;
 }
 
 /* Media Query For Navigation Bar */
