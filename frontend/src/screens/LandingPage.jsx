@@ -2,6 +2,7 @@ import React from 'react';
 import Citysearch from '../components/Citysearch';
 import RoomType from '../components/RoomType';
 import Search from '../components/Search';
+import TopHotels from '../components/TopHotels';
 
 const LandingPage = () => {
   return (
@@ -11,6 +12,7 @@ const LandingPage = () => {
           <Search />
           <Citysearch />
           <RoomType />
+          <TopHotels />
         </div>
       </div>
     </>
