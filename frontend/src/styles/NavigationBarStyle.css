@@ -35,7 +35,7 @@
   align-items: center;
 }
 
-.navigation-buttons li a {
+.navigation-buttons li {
   padding: 0.5rem 1rem;
   color: #282750;
   text-decoration: none;
@@ -43,11 +43,27 @@
   transition: background 0.5s ease;
 }
 
-.navigation-buttons li a:hover {
+.navigation-buttons li:hover {
   background: #3db2ff;
   color: #fff;
+  cursor: pointer;
+}
+
+.navigation-right-most-button button {
+  background: transparent;
+  border: none;
+  letter-spacing: 5px;
+}
+
+.navigation-right-most-button button:hover {
+  color: #fff;
+  cursor: pointer;
 }
 
 .navigation-right-most-button {
   background: #3db2ff;
+}
+
+/* Media Query For Navigation Bar */
+@media screen and (max-width: 600px) {
 }

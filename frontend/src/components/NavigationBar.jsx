@@ -23,23 +23,28 @@ const NavigationBar = () => {
             id="nav-menu"
           />
           <ul className="navigation-buttons">
-            {/* <li>
+            <li>
+              <Link to="/">Register Hotel</Link>
+            </li>
+            <li>
+              <Link to="/">My Bookings</Link>
+            </li>
+            <li>
+              <Link to="/">Notifications</Link>
+            </li>
+            <li>
+              <Link to="/">Help</Link>
+            </li>
+            <li>
               <Link to="/">
                 <i className="fa-solid fa-user"></i> Profile
               </Link>
             </li>
             <li>
-              <Link to="/" className="navigation-right-most-button">
-                Log Out
-              </Link>
-            </li> */}
-            <li>
               <Link to="/">Log In</Link>
             </li>
-            <li>
-              <Link to="/" className="navigation-right-most-button">
-                Sign Up
-              </Link>
+            <li className="navigation-right-most-button">
+              <button to="/">Sign Up</button>
             </li>
           </ul>
         </div>

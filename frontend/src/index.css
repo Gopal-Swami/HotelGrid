@@ -23,6 +23,14 @@ i {
   color: #282750;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #fff;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
