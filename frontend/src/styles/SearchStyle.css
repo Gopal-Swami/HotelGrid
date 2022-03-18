@@ -1,7 +1,7 @@
 /* Search Component Styles */
 
 .search-container {
-  border: 2px solid #000;
+  /* border: 2px solid #000; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,7 +57,7 @@
 }
 
 /* Media Query For Search Bar */
-@media screen and (max-width: 1160px) {
+@media screen and (max-width: 1430px) {
   .left-search-container h1 {
     font-size: 2rem;
     color: #000;
