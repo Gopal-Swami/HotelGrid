@@ -1,0 +1,98 @@
+/* Navigation Bar Component Styles are defined here */
+
+.navigation-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border-bottom: 2px solid #1a2238; */
+  padding: 0.5rem 0rem;
+  max-height: 10vh;
+  background: #1a2238;
+}
+
+#logo {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.navigation-options {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0rem 2rem;
+}
+
+.navigation-menu-wrapper {
+  display: none;
+}
+
+#nav-menu {
+  opacity: 0;
+}
+
+/* UL list of navigation options */
+.navigation-buttons {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.navigation-buttons li {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  margin: 0rem 0.5rem;
+  transition: background 0.5s ease;
+}
+
+.navigation-buttons li:hover {
+  color: #fff;
+  cursor: pointer;
+  border-bottom: 3px solid #f4db7d;
+}
+
+.navigation-right-most-button button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  letter-spacing: 5px;
+}
+
+.navigation-right-most-button {
+  background: #ff6a3d;
+  cursor: pointer;
+}
+
+/* Media Query For Navigation Bar */
+@media screen and (max-width: 1160px) {
+  .navigation-menu-wrapper {
+    display: block;
+    color: #fff;
+    font-size: 2rem;
+    z-index: 10;
+  }
+
+  .navigation-buttons {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background: #1a2238;
+    top: 0;
+    left: 100%;
+    transition: transform 1s ease;
+  }
+
+  .navigation-buttons a {
+    font-size: 1.5rem;
+  }
+
+  .nav-menu:checked + .navigation-buttons {
+    transform: translateX(-100%);
+  }
+}
