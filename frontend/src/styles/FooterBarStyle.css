@@ -17,11 +17,12 @@
 .news-letter {
   font-size: 1.5rem;
   color: #ff6a3d;
+  text-align: center;
 }
 
 .news-email {
   font-size: 1.5rem;
-  margin: 0rem 1rem;
+  margin: 1rem 1rem;
   padding: 0.2rem 1rem;
   border-radius: 5px;
   border: none;
@@ -62,4 +63,21 @@
 .footer-copy-right h1 {
   color: #fff;
   padding: 1rem 0rem;
+}
+
+@media screen and (max-width: 970px) {
+  .footer-menu-container {
+    justify-content: center;
+  }
+  .footer-menu-container ul li a {
+    text-align: center;
+  }
+  .footer-news-letter {
+    justify-content: space-around;
+  }
+  .news-letter,
+  .news-email,
+  .subscribe-news-letter {
+    margin: 1rem 0rem;
+  }
 }
