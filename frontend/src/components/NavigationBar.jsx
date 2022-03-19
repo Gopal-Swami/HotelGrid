@@ -2,8 +2,11 @@ import React from 'react';
 import logo from '../resources/HotelGRID.gif';
 import { Link } from 'react-router-dom';
 import '../styles/NavigationBarStyle.css';
+import { useNavigate } from 'react-router-dom';
 
 const NavigationBar = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="navigation-container">
@@ -37,10 +40,13 @@ const NavigationBar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/">Log In</Link>
+              <Link to="/login">Log In</Link>
             </li>
             <li className="navigation-right-most-button">
-              <button to="/">Sign Up</button>
+              <Link to="/sign-up">Sign Up</Link>
+            </li>
+            <li className="navigation-right-most-button">
+              <button onClick={(e) => navigate('/')}>Log Out</button>
             </li>
           </ul>
         </div>
