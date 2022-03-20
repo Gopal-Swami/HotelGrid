@@ -58,11 +58,16 @@
   border: none;
   color: #fff;
   letter-spacing: 5px;
+  cursor: pointer;
 }
 
 .navigation-right-most-button {
   background: #ff6a3d;
   cursor: pointer;
+}
+
+.navigation-right-most-button a {
+  color: #fff;
 }
 
 /* Media Query For Navigation Bar */
