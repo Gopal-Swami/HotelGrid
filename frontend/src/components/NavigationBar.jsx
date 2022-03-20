@@ -35,7 +35,7 @@ const NavigationBar = () => {
               <Link to="/">Help</Link>
             </li>
             <li>
-              <Link to="/">
+              <Link to="/profile">
                 <i className="fa-solid fa-user"></i> Profile
               </Link>
             </li>
