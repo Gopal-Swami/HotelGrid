@@ -109,6 +109,7 @@
 .address-details textarea,
 .basic-details textarea {
   overflow: scroll;
+  height: 2.5rem;
 }
 
 .address-details textarea::-webkit-scrollbar,
@@ -117,6 +118,7 @@
 }
 
 .basic-details input:focus,
+.basic-details textarea:focus,
 .address-details textarea:focus {
   outline: none;
 }
@@ -146,6 +148,38 @@
   background-position: right center; /* change the direction of the change here */
   color: #fff;
   text-decoration: none;
+}
+
+.bookings-container,
+.notification-container,
+.users-for-admin-container,
+.hotels-for-admin-owner-container,
+.enquiries-container,
+.responses-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  padding: 1rem 2rem;
+}
+
+.bookings-container td,
+.notification-container td,
+.users-for-admin-container td,
+.hotels-for-admin-owner-container td,
+.enquiries-container td,
+.responses-container td {
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+
+.bookings-container td i:hover,
+.notification-container td i:hover,
+.users-for-admin-container td i:hover,
+.hotels-for-admin-owner-container td i:hover,
+.enquiries-container td i:hover,
+.responses-container td i:hover {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1140px) {
