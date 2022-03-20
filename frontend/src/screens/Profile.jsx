@@ -7,7 +7,11 @@ import Notifications from '../components/Notifications';
 import Responses from '../components/Responses';
 import UserProfile from '../components/UserProfile';
 import Users from '../components/Users';
+import Help from '../components/Help';
 import '../styles/ProfileStyle.css';
+import RegisterHotel from './RegisterHotel';
+import Warning from '../components/Warning';
+import Loader from '../components/Loader';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -69,13 +73,15 @@ const Profile = () => {
           </ul>
         </div>
         <div className="profile-menu-items-actions">
-          {/* <UserProfile /> */}
+          <UserProfile />
           {/* <Bookings /> */}
           {/* <Notifications /> */}
           {/* <Users /> */}
           {/* <MyProperties /> */}
           {/* <Enquiries /> */}
-          <Responses />
+          {/* <Responses /> */}
+          {/* <Help /> */}
+          {/* <RegisterHotel /> */}
         </div>
       </div>
     </>
