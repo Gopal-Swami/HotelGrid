@@ -26,7 +26,7 @@ const HotelCard = () => {
             <i class="fa-solid fa-star" style={{ color: 'gray' }}></i>
           </div>
           <div className="hotel-card-actions">
-            <Link to="/">View</Link>
+            <Link to="/hotels/1">View</Link>
           </div>
         </div>
       </Link>
