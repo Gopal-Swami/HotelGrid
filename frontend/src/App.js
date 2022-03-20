@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import FooterBar from './components/FooterBar';
 import Signup from './screens/Signup';
 import Login from './screens/Login';
+import SearchResult from './screens/SearchResult';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/search-results" element={<SearchResult />} />
       </Routes>
       <FooterBar />
     </Router>
