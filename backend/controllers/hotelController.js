@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Hotel from '../models/Hotel.js';
-let hotelAvatar = '..HotelGridfrontend\\public\\images\\hotelImage.jpg';
+let hotelAvatar = '\\images\\hotel.jpg';
 
 // @desc fetch all Hotels
 // @route GET api/v1/hotels
@@ -192,7 +192,7 @@ const createHotelReview = asyncHandler(async (req, res) => {
 // @route GET api/v1/hotels/top
 // @access Public
 const getTopHotels = asyncHandler(async (req, res) => {
-  const hotels = await Hotel.find({}).sort({ rating: -1 }).limit(3);
+  const hotels = await Hotel.find({}).sort({ rating: -1 }).limit(5);
   res.json(hotels);
 });
 

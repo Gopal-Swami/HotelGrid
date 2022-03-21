@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Citysearch from '../components/Citysearch';
 import RoomType from '../components/RoomType';
 import Search from '../components/Search';
