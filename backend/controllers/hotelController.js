@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Hotel from '../models/Hotel.js';
-let hotelAvatar = '..HotelGridfrontend\\public\\images\\hotelImage.jpg';
+let hotelAvatar = '\\images\\hotel.jpg';
 
 // @desc fetch all Hotels
 // @route GET api/v1/hotels
