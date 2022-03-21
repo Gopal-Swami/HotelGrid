@@ -7,6 +7,8 @@ import { updateUserProfile } from '../actions/userActions';
 const UserProfile = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
+  const updatedUser = useSelector((state) => state.updateUser);
+  const { loading: updateLoading, error: updateError, success } = updatedUser;
   const { loading, error, userInfo } = userLogin;
   const [firstName, setFirstName] = useState('');
   const [enableNess, setEnableNess] = useState(true);
@@ -108,6 +110,7 @@ const UserProfile = () => {
             </div>
             <div className="user-details">
               <div className="basic-details">
+                <h3>{error && error}</h3>
                 <input
                   autoComplete="off"
                   type="text"
@@ -216,7 +219,7 @@ const UserProfile = () => {
                   onChange={(e) => setCountry(e.target.value)}
                 ></textarea>
                 <button className="update-profile-button" onClick={updateUser}>
-                  Update
+                  {updateLoading ? <Loader /> : 'Update'}
                 </button>
                 <button
                   className="enable-update-profile-button"

@@ -8,6 +8,9 @@ import {
   HOTEL_BY_ID_REQUEST,
   HOTEL_BY_ID_SUCCESS,
   HOTEL_BY_ID_FAIL,
+  HOTEL_CREATE_REQUEST,
+  HOTEL_CREATE_SUCCESS,
+  HOTEL_CREATE_FAIL,
 } from '../constants/hotelConstants';
 import axios from 'axios';
 
@@ -59,6 +62,42 @@ export const getHotelById = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: HOTEL_BY_ID_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const generateHotelTemplate = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: HOTEL_CREATE_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    if (userInfo.user.isOwner) {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/owner`,
+        config
+      );
+      dispatch({ type: HOTEL_CREATE_SUCCESS, payload: data });
+    } else if (userInfo.user.isAdmin) {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/admin`,
+        config
+      );
+      dispatch({ type: HOTEL_CREATE_SUCCESS, payload: data });
+    }
+  } catch (error) {
+    dispatch({
+      type: HOTEL_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

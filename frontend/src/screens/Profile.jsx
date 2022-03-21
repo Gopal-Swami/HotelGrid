@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Bookings from '../components/Bookings';
 import Enquiries from '../components/Enquiries';
@@ -18,7 +18,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
-
+  const [activeTab, setActiveTab] = useState('profile');
   useEffect(() => {
     if (!userInfo) {
       navigate('/');
@@ -30,27 +30,39 @@ const Profile = () => {
       <div className="profile-container">
         <div className="profile-menu">
           <ul className="profile-navigations navigation-buttons">
-            {userInfo.isOwner ? (
+            {userInfo.user.isOwner || userInfo.user.isAdmin ? (
               <>
                 <li>
-                  <button className="profile-buttons" to="/">
+                  <button
+                    className="profile-buttons"
+                    onClick={(e) => setActiveTab('registerhotel')}
+                  >
                     Register Hotel
                   </button>
                 </li>
 
                 <li>
-                  <button className="profile-buttons" to="/">
+                  <button
+                    className="profile-buttons"
+                    onClick={(e) => setActiveTab('myproperties')}
+                  >
                     My Properties
                   </button>
                 </li>
 
                 <li>
-                  <button className="profile-buttons" to="/">
+                  <button
+                    className="profile-buttons"
+                    onClick={(e) => setActiveTab('enquiries')}
+                  >
                     Enquiries
                   </button>
                 </li>
                 <li>
-                  <button className="profile-buttons" to="/">
+                  <button
+                    className="profile-buttons"
+                    onClick={(e) => setActiveTab('responses')}
+                  >
                     Respopnses
                   </button>
                 </li>
@@ -59,24 +71,37 @@ const Profile = () => {
               ''
             )}
             <li>
-              <button className="profile-buttons" to="/">
+              <button
+                className="profile-buttons"
+                onClick={(e) => setActiveTab('mybookings')}
+              >
                 My Bookings
               </button>
             </li>
             <li>
-              <button className="profile-buttons" to="/">
+              <button
+                className="profile-buttons"
+                onClick={(e) => setActiveTab('notifications')}
+              >
                 Notifications
               </button>
             </li>
             <li>
-              <button className="profile-buttons" to="/">
-                Update Password
+              <button
+                className="profile-buttons"
+                onClick={(e) => setActiveTab('profile')}
+              >
+                Update Profile
               </button>
             </li>
-            {userInfo.isAdmin ? (
+
+            {userInfo.user.isAdmin ? (
               <>
                 <li>
-                  <button className="profile-buttons" to="/">
+                  <button
+                    className="profile-buttons"
+                    onClick={(e) => setActiveTab('users')}
+                  >
                     Users
                   </button>
                 </li>
@@ -85,28 +110,25 @@ const Profile = () => {
               ''
             )}
             <li>
-              <button className="profile-buttons" to="/">
-                Update Profile
-              </button>
-            </li>
-
-            <li>
-              <button className="profile-buttons" to="/">
+              <button
+                className="profile-buttons"
+                onClick={(e) => setActiveTab('help')}
+              >
                 Help
               </button>
             </li>
           </ul>
         </div>
         <div className="profile-menu-items-actions">
-          <UserProfile />
-          {/* <Bookings /> */}
-          {/* <Notifications /> */}
-          {/* <Users /> */}
-          {/* <MyProperties /> */}
-          {/* <Enquiries /> */}
-          {/* <Responses /> */}
-          {/* <Help /> */}
-          {/* <RegisterHotel /> */}
+          {activeTab === 'profile' && <UserProfile />}
+          {activeTab === 'mybookings' && <Bookings />}
+          {activeTab === 'notifications' && <Notifications />}
+          {activeTab === 'users' && <Users />}
+          {activeTab === 'myproperties' && <MyProperties />}
+          {activeTab === 'enquiries' && <Enquiries />}
+          {activeTab === 'responses' && <Responses />}
+          {activeTab === 'help' && <Help />}
+          {activeTab === 'registerhotel' && <RegisterHotel />}
         </div>
       </div>
     </>

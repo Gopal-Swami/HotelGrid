@@ -8,12 +8,18 @@ import {
   HOTEL_BY_ID_REQUEST,
   HOTEL_BY_ID_SUCCESS,
   HOTEL_BY_ID_FAIL,
+  HOTEL_CREATE_REQUEST,
+  HOTEL_CREATE_SUCCESS,
+  HOTEL_CREATE_FAIL,
+  HOTEL_UPDATE_REQUEST,
+  HOTEL_UPDATE_SUCCESS,
+  HOTEL_UPDATE_FAIL,
 } from '../constants/hotelConstants';
 
 export const hotelListReducer = (state = { hotels: [] }, action) => {
   switch (action.type) {
     case HOTEL_LIST_REQUEST:
-      return { loading: true, products: [] };
+      return { loading: true, hotels: [] };
     case HOTEL_LIST_SUCCESS:
       return {
         loading: false,
@@ -31,7 +37,7 @@ export const hotelListReducer = (state = { hotels: [] }, action) => {
 export const topHotelListReducer = (state = { hotels: [] }, action) => {
   switch (action.type) {
     case TOP_HOTEL_LIST_REQUEST:
-      return { loading: true, products: [] };
+      return { loading: true, hotels: [] };
     case TOP_HOTEL_LIST_SUCCESS:
       return {
         loading: false,
@@ -54,6 +60,39 @@ export const listHotelById = (state = {}, action) => {
         hotel: action.payload,
       };
     case HOTEL_BY_ID_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const createHotelReducer = (state = {}, action) => {
+  switch (action.type) {
+    case HOTEL_CREATE_REQUEST:
+      return { loading: true };
+    case HOTEL_CREATE_SUCCESS:
+      return {
+        loading: false,
+        hotel: action.payload,
+      };
+    case HOTEL_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const updateHotelReducer = (state = {}, action) => {
+  switch (action.type) {
+    case HOTEL_UPDATE_REQUEST:
+      return { loading: true };
+    case HOTEL_UPDATE_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        hotel: action.payload,
+      };
+    case HOTEL_UPDATE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
