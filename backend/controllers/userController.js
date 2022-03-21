@@ -82,7 +82,13 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.lastName = req.body.lastName || user.lastName;
     user.email = req.body.email || user.email;
     user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
-    user.address = req.body.address || user.address;
+
+    user.address.addressline1 = req.body.addressline1;
+    user.address.city = req.body.city;
+    user.address.state = req.body.state;
+    user.address.postalCode = req.body.postalCode;
+    user.address.country = req.body.country;
+
     user.profileUrl = req.file ? req.file.path : avatar;
 
     if (req.body.password) {

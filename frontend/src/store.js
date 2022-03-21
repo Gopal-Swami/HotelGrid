@@ -6,7 +6,11 @@ import {
   topHotelListReducer,
   listHotelById,
 } from './reducers/hotelReducers';
-import { userRegisterReducer, userLoginReducer } from './reducers/userReducers';
+import {
+  userRegisterReducer,
+  userLoginReducer,
+  userUpdateProfileReducer,
+} from './reducers/userReducers';
 
 const reducer = combineReducers({
   hotelsList: hotelListReducer,
@@ -14,6 +18,7 @@ const reducer = combineReducers({
   hotelById: listHotelById,
   userRegister: userRegisterReducer,
   userLogin: userLoginReducer,
+  updateUser: userUpdateProfileReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

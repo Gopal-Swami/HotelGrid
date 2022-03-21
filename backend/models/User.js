@@ -34,11 +34,11 @@ const userSchema = mongoose.Schema(
       default: '',
     },
     address: {
-      addressline1: { type: String },
-      city: { type: String },
-      postalCode: { type: String },
-      state: { type: String },
-      country: { type: String },
+      addressline1: { type: String, default: '' },
+      city: { type: String, default: '' },
+      postalCode: { type: String, default: '' },
+      state: { type: String, default: '' },
+      country: { type: String, default: '' },
     },
     isAdmin: {
       type: Boolean,
