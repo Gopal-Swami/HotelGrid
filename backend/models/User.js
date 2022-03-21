@@ -33,17 +33,12 @@ const userSchema = mongoose.Schema(
       type: String,
       default: '',
     },
-    username: {
-      type: String,
-      required: [true, 'Please Provide Valid Username'],
-      unique: true,
-    },
     address: {
-      addressline1: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      state: { type: String, required: true },
-      country: { type: String, required: true },
+      addressline1: { type: String },
+      city: { type: String },
+      postalCode: { type: String },
+      state: { type: String },
+      country: { type: String },
     },
     isAdmin: {
       type: Boolean,

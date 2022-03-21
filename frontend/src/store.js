@@ -6,13 +6,14 @@ import {
   topHotelListReducer,
   listHotelById,
 } from './reducers/hotelReducers';
-import { userRegisterReducer } from './reducers/userReducers';
+import { userRegisterReducer, userLoginReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
   hotelsList: hotelListReducer,
   topHotelsList: topHotelListReducer,
   hotelById: listHotelById,
   userRegister: userRegisterReducer,
+  userLogin: userLoginReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
