@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/User.js';
 import generateToken from '../utils/generateTokes.js';
-let avatar = '..HotelGridfrontend\\public\\images\\avatar.jpg';
+let avatar = '\\images\\avatar.png';
 // @desc Login user & get token
 // @route POST /api/v1/users/login
 // @access public
@@ -40,15 +40,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @access Public
 
 const registerUser = asyncHandler(async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    username,
-    email,
-    phoneNumber,
-    address,
-    password,
-  } = req.body;
+  const { firstName, lastName, username, email, phoneNumber, password } =
+    req.body;
   const userExists = await User.findOne({ email });
   if (userExists) {
     res.status(400);
@@ -62,7 +55,6 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     phoneNumber,
     profileUrl: req.file ? req.file.path : avatar,
-    address,
     password,
   });
 
