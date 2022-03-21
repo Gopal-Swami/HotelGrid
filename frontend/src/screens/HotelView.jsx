@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHotelById } from '../actions/hotelActions';
 import Loader from '../components/Loader';
+import { Rating } from '@mui/material';
 
 const HotelView = () => {
   const params = useParams();
@@ -23,6 +24,10 @@ const HotelView = () => {
         <div className="universal-page-loader">
           <Loader />
         </div>
+      ) : !hotel ? (
+        <div className="universal-page-loader">
+          <p>Opps! Something Went Wrong</p>
+        </div>
       ) : (
         <>
           <div className="hotel-view-container">
@@ -31,9 +36,10 @@ const HotelView = () => {
                 <h1>{hotel.hotelName} </h1>
               </div>
               <p className="hotel-address-at-view">
-                New Node Street, Kolkata, West Bengal, 700001
+                {hotel.address.addressline1}, {hotel.address.city},
+                {hotel.address.state}, {hotel.address.postalCode}
               </p>
-              <Gallary />
+              <Gallary gallaryItems={hotel.gallary} />
               <div className="facility-container">
                 <span>
                   <i class="fa-solid fa-wifi"></i>
@@ -60,196 +66,64 @@ const HotelView = () => {
                   className="review-message"
                 ></textarea>
                 <p className="rating">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star-half-stroke"></i>
-                  <i class="fa-solid fa-star" style={{ color: 'gray' }}></i>
+                  <Rating value={5} />
                 </p>
                 <button className="submit-review">Submit</button>
               </div>
             </div>
             <div className="facility-rooms">
-              <div className="hotel-room-card">
-                <div className="room-description">
-                  <h3>Single</h3>1 extra-large double bed and 1 large double bed
-                  Air conditioning Ensuite bathroom Flat-screen TV Free WiFi
-                  Free toiletries Shower Toilet Towels
-                </div>
+              {hotel.availability.map((aval) => (
+                <div className="hotel-room-card">
+                  <div className="room-description">
+                    <h3>
+                      {aval.type} At ₹ {aval.price}
+                    </h3>
+                    <i class="fa-solid fa-bed"></i> 1 large double bed ,<br />
+                    {aval.type !== 'Single' ? (
+                      <>
+                        <i class="fa-solid fa-wind"></i>Air conditioning,
+                        <br />
+                        <i class="fa-solid fa-wifi"></i> Free WiFi,
+                        <br />
+                      </>
+                    ) : (
+                      ''
+                    )}
+                    <i class="fa-solid fa-tv"></i> Flat-screen TV,
+                    <br />
+                    <i class="fa-solid fa-toilet-paper"></i> Free toiletries
+                  </div>
 
-                <div className="hotel-no-of-rooms-to-book">
-                  <select name="no-of-rooms" id="no-of-rooms">
-                    <option value="None" selected>
-                      No of Rooms
-                    </option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                  </select>
-                </div>
+                  <div className="hotel-no-of-rooms-to-book">
+                    <select name="no-of-rooms" id="no-of-rooms">
+                      <option value="None" selected>
+                        No of Rooms
+                      </option>
+                      {[...Array(aval.rooms).keys()].map((x) => (
+                        <option key={x + 1} value={x + 1}>
+                          {x + 1}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                <div className="book-button">
-                  <button>Book Now</button>
+                  <div className="book-button">
+                    <button>Book Now</button>
+                  </div>
                 </div>
-              </div>
-              <div className="hotel-room-card">
-                <div className="room-description">
-                  <h3>Single</h3>1 extra-large double bed and 1 large double bed
-                  Air conditioning Ensuite bathroom Flat-screen TV Free WiFi
-                  Free toiletries Shower Toilet Towels
-                </div>
-                <div className="hotel-no-of-rooms-to-book">
-                  <select name="no-of-rooms" id="no-of-rooms">
-                    <option value="None" selected>
-                      No of Rooms
-                    </option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                  </select>
-                </div>
-                <div className="book-button">
-                  <button>Book Now</button>
-                </div>
-              </div>
-              <div className="hotel-room-card">
-                <div className="room-description">
-                  <h3>Single</h3>1 extra-large double bed and 1 large double bed
-                  Air conditioning Ensuite bathroom Flat-screen TV Free WiFi
-                  Free toiletries Shower Toilet Towels
-                </div>
-                <div className="hotel-no-of-rooms-to-book">
-                  <select name="no-of-rooms" id="no-of-rooms">
-                    <option value="None" selected>
-                      No of Rooms
-                    </option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                  </select>
-                </div>
-                <div className="book-button">
-                  <button>Book Now</button>
-                </div>
-              </div>
-              <div className="hotel-room-card">
-                <div className="room-description">
-                  <h3>Single</h3>1 extra-large double bed and 1 large double bed
-                  Air conditioning Ensuite bathroom Flat-screen TV Free WiFi
-                  Free toiletries Shower Toilet Towels
-                </div>
-                <div className="hotel-no-of-rooms-to-book">
-                  <select name="no-of-rooms" id="no-of-rooms">
-                    <option value="None" selected>
-                      No of Rooms
-                    </option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                  </select>
-                </div>
-                <div className="book-button">
-                  <button>Book Now</button>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           <div className="enquiry-feedback-form-container">
             <div className="feed-backs">
               <h1>Our Reviews</h1>
-              <div className="feed-card">
-                <p className="user">John Doe</p>
-                <p className="comment">Lorem ipsum dolor sit amet.</p>
-                <p className="rating">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star-half-stroke"></i>
-                  <i class="fa-solid fa-star" style={{ color: 'gray' }}></i>
-                </p>
-              </div>
-              <div className="feed-card">
-                <p className="user">John Doe</p>
-                <p className="comment">Lorem ipsum dolor sit amet.</p>
-                <p className="rating">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star-half-stroke"></i>
-                  <i class="fa-solid fa-star" style={{ color: 'gray' }}></i>
-                </p>
-              </div>
-              <div className="feed-card">
-                <p className="user">John Doe</p>
-                <p className="comment">Lorem ipsum dolor sit amet.</p>
-                <p className="rating">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star-half-stroke"></i>
-                  <i class="fa-solid fa-star" style={{ color: 'gray' }}></i>
-                </p>
-              </div>
-              <div className="feed-card">
-                <p className="user">John Doe</p>
-                <p className="comment">Lorem ipsum dolor sit amet.</p>
-                <p className="rating">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star-half-stroke"></i>
-                  <i class="fa-solid fa-star" style={{ color: 'gray' }}></i>
-                </p>
-              </div>
-              <div className="feed-card">
-                <p className="user">John Doe</p>
-                <p className="comment">Lorem ipsum dolor sit amet.</p>
-                <p className="rating">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star-half-stroke"></i>
-                  <i class="fa-solid fa-star" style={{ color: 'gray' }}></i>
-                </p>
-              </div>
-              <div className="feed-card">
-                <p className="user">John Doe</p>
-                <p className="comment">Lorem ipsum dolor sit amet.</p>
-                <p className="rating">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star-half-stroke"></i>
-                  <i class="fa-solid fa-star" style={{ color: 'gray' }}></i>
-                </p>
-              </div>
-              <div className="feed-card">
-                <p className="user">John Doe</p>
-                <p className="comment">Lorem ipsum dolor sit amet.</p>
-                <p className="rating">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star-half-stroke"></i>
-                  <i class="fa-solid fa-star" style={{ color: 'gray' }}></i>
-                </p>
-              </div>
+              {hotel.reviews.map((review) => (
+                <div className="feed-card" key={review._id}>
+                  <p className="user">{review.name}</p>
+                  <p className="comment">{review.comment}</p>
+                  <Rating value={review.rating} />
+                </div>
+              ))}
             </div>
             <div className="enquiry-form">
               <h1>How May We Help You ?</h1>
