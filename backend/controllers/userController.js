@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/User.js';
 import generateToken from '../utils/generateTokes.js';
-let avatar = '..HotelGridfrontend\\public\\images\\avatar.jpg';
+let avatar = '\\images\\avatar.png';
 // @desc Login user & get token
 // @route POST /api/v1/users/login
 // @access public
@@ -40,15 +40,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @access Public
 
 const registerUser = asyncHandler(async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    username,
-    email,
-    phoneNumber,
-    address,
-    password,
-  } = req.body;
+  const { firstName, lastName, username, email, phoneNumber, password } =
+    req.body;
   const userExists = await User.findOne({ email });
   if (userExists) {
     res.status(400);
@@ -62,13 +55,13 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     phoneNumber,
     profileUrl: req.file ? req.file.path : avatar,
-    address,
     password,
   });
 
   if (user) {
     res.status(201).json({
       user: user,
+      success: true,
       token: generateToken(user._id),
     });
   } else {
@@ -89,7 +82,13 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.lastName = req.body.lastName || user.lastName;
     user.email = req.body.email || user.email;
     user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
-    user.address = req.body.address || user.address;
+
+    user.address.addressline1 = req.body.addressline1;
+    user.address.city = req.body.city;
+    user.address.state = req.body.state;
+    user.address.postalCode = req.body.postalCode;
+    user.address.country = req.body.country;
+
     user.profileUrl = req.file ? req.file.path : avatar;
 
     if (req.body.password) {

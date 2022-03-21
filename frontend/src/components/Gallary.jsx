@@ -5,30 +5,15 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import ListSubheader from '@mui/material/ListSubheader';
 import IconButton from '@mui/material/IconButton';
 
-const Gallary = () => {
+const Gallary = ({ gallaryItems }) => {
   return (
     <ImageList className="gallary">
       <ImageListItem key="Subheader" cols={2}>
         <ListSubheader component="div">Gallary</ListSubheader>
       </ImageListItem>
-      {itemData.map((item) => (
-        <ImageListItem key={item.img}>
-          <img
-            src={`${item.img}?w=248&fit=crop&auto=format`}
-            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.title}
-            loading="lazy"
-          />
-          <ImageListItemBar
-            title={item.title}
-            subtitle={item.author}
-            actionIcon={
-              <IconButton
-                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                aria-label={`info about ${item.title}`}
-              ></IconButton>
-            }
-          />
+      {gallaryItems.map((item) => (
+        <ImageListItem key={item}>
+          <img src={`\\${item}`} alt="" />
         </ImageListItem>
       ))}
     </ImageList>

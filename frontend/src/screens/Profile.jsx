@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Bookings from '../components/Bookings';
 import Enquiries from '../components/Enquiries';
@@ -12,76 +12,123 @@ import '../styles/ProfileStyle.css';
 import RegisterHotel from './RegisterHotel';
 import Warning from '../components/Warning';
 import Loader from '../components/Loader';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+  const [activeTab, setActiveTab] = useState('profile');
+  useEffect(() => {
+    if (!userInfo) {
+      navigate('/');
+    }
+  }, [navigate, userInfo]);
+
   return (
     <>
       <div className="profile-container">
         <div className="profile-menu">
           <ul className="profile-navigations navigation-buttons">
+            {userInfo.user.isOwner || userInfo.user.isAdmin ? (
+              <>
+                <li>
+                  <button
+                    className="profile-buttons"
+                    onClick={(e) => setActiveTab('registerhotel')}
+                  >
+                    Register Hotel
+                  </button>
+                </li>
+
+                <li>
+                  <button
+                    className="profile-buttons"
+                    onClick={(e) => setActiveTab('myproperties')}
+                  >
+                    My Properties
+                  </button>
+                </li>
+
+                <li>
+                  <button
+                    className="profile-buttons"
+                    onClick={(e) => setActiveTab('enquiries')}
+                  >
+                    Enquiries
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="profile-buttons"
+                    onClick={(e) => setActiveTab('responses')}
+                  >
+                    Respopnses
+                  </button>
+                </li>
+              </>
+            ) : (
+              ''
+            )}
             <li>
-              <button className="profile-buttons" to="/">
-                Register Hotel
-              </button>
-            </li>
-            <li>
-              <button className="profile-buttons" to="/">
+              <button
+                className="profile-buttons"
+                onClick={(e) => setActiveTab('mybookings')}
+              >
                 My Bookings
               </button>
             </li>
             <li>
-              <button className="profile-buttons" to="/">
+              <button
+                className="profile-buttons"
+                onClick={(e) => setActiveTab('notifications')}
+              >
                 Notifications
               </button>
             </li>
             <li>
-              <button className="profile-buttons" to="/">
-                Update Password
-              </button>
-            </li>
-            <li>
-              <button className="profile-buttons" to="/">
+              <button
+                className="profile-buttons"
+                onClick={(e) => setActiveTab('profile')}
+              >
                 Update Profile
               </button>
             </li>
+
+            {userInfo.user.isAdmin ? (
+              <>
+                <li>
+                  <button
+                    className="profile-buttons"
+                    onClick={(e) => setActiveTab('users')}
+                  >
+                    Users
+                  </button>
+                </li>
+              </>
+            ) : (
+              ''
+            )}
             <li>
-              <button className="profile-buttons" to="/">
-                Users
-              </button>
-            </li>
-            <li>
-              <button className="profile-buttons" to="/">
-                My Properties
-              </button>
-            </li>
-            <li>
-              <button className="profile-buttons" to="/">
-                Enquiries
-              </button>
-            </li>
-            <li>
-              <button className="profile-buttons" to="/">
-                Respopnses
-              </button>
-            </li>
-            <li>
-              <button className="profile-buttons" to="/">
+              <button
+                className="profile-buttons"
+                onClick={(e) => setActiveTab('help')}
+              >
                 Help
               </button>
             </li>
           </ul>
         </div>
         <div className="profile-menu-items-actions">
-          <UserProfile />
-          {/* <Bookings /> */}
-          {/* <Notifications /> */}
-          {/* <Users /> */}
-          {/* <MyProperties /> */}
-          {/* <Enquiries /> */}
-          {/* <Responses /> */}
-          {/* <Help /> */}
-          {/* <RegisterHotel /> */}
+          {activeTab === 'profile' && <UserProfile />}
+          {activeTab === 'mybookings' && <Bookings />}
+          {activeTab === 'notifications' && <Notifications />}
+          {activeTab === 'users' && <Users />}
+          {activeTab === 'myproperties' && <MyProperties />}
+          {activeTab === 'enquiries' && <Enquiries />}
+          {activeTab === 'responses' && <Responses />}
+          {activeTab === 'help' && <Help />}
+          {activeTab === 'registerhotel' && <RegisterHotel />}
         </div>
       </div>
     </>
