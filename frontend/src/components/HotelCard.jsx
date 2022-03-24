@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/HotelCardStyle.css';
-
-import hotelImage from '../resources/kolkata.jpg';
 import Rating from './Rating';
 
 const HotelCard = ({ hotel }) => {
@@ -21,7 +19,7 @@ const HotelCard = ({ hotel }) => {
             <Rating value={hotel.rating} />
           </div>
           <div className="hotel-card-actions">
-            <Link to={`/hotels/${hotel._id}`}>View</Link>
+            <span>View</span>
           </div>
         </div>
       </Link>

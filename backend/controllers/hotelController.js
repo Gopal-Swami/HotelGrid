@@ -122,8 +122,19 @@ const updateHotel = asyncHandler(async (req, res) => {
     hotel.hotelName = req.body.hotelName || hotel.hotelName;
     hotel.hotelDescription =
       req.body.hotelDescription || hotel.hotelDescription;
-    hotel.address = req.body.address || hotel.address;
-    hotel.availability = req.body.availability || hotel.availability;
+    hotel.address.addressline1 = req.body.addressline1;
+    hotel.address.city = req.body.city;
+    hotel.address.state = req.body.state;
+    hotel.address.postalCode = req.body.postalCode;
+    hotel.address.country = req.body.country;
+    hotel.availability[0].rooms =
+      req.body.singleRoom || hotel.availability[0].rooms;
+    hotel.availability[1].rooms =
+      req.body.doubleRoom || hotel.availability[1].rooms;
+    hotel.availability[2].rooms =
+      req.body.TripleRoom || hotel.availability[2].rooms;
+    hotel.availability[3].rooms =
+      req.body.luxuryRoom || hotel.availability[3].rooms;
     hotel.hotelPhotoUrl = req.file ? req.file.path : hotelAvatar;
     const updatedHotel = await hotel.save();
     res.json(updatedHotel);

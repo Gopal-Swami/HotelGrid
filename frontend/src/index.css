@@ -42,3 +42,8 @@ body {
   height: 90vh;
   width: 100vw;
 }
+
+input:focus {
+  outline: none;
+  background: transparent;
+}
