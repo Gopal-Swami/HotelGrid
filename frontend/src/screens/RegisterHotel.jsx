@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/RegisterHotelStyle.css';
-import { generateHotelTemplate } from '../actions/hotelActions';
+import { generateHotelTemplate, updateHotel } from '../actions/hotelActions';
 import { useDispatch, useSelector } from 'react-redux';
 
-const RegisterHotel = () => {
+const RegisterHotel = ({ hotelId }) => {
   const dispatch = useDispatch();
   const [hotelPhotoUrl, setHotelPhotoUrl] = useState(null);
   const [hotelName, setHotelName] = useState('');
@@ -29,9 +29,52 @@ const RegisterHotel = () => {
     dispatch(generateHotelTemplate());
   };
 
+  const submitForApproval = () => {
+    if (
+      hotelName === '' ||
+      street === '' ||
+      city === '' ||
+      state === '' ||
+      country === '' ||
+      postalCode === '' ||
+      hotelDescription === '' ||
+      singleRoom === '' ||
+      doubleRoom === '' ||
+      tripleRoom === '' ||
+      luxuryRoom === ''
+    ) {
+      alert('Please Fill All Fields To Proceed');
+    } else {
+      const data = new FormData();
+      data.append('hotelName', hotelName);
+      data.append('addressline1', street);
+      data.append('city', city);
+      data.append('state', state);
+      data.append('postalCode', postalCode);
+      data.append('country', country);
+      data.append('hotelDescription', hotelDescription);
+      data.append('file', hotelPhotoUrl);
+      data.append('singleRoom', singleRoom);
+      data.append('doubleRoom', doubleRoom);
+      data.append('tripleRoom', tripleRoom);
+      data.append('luxuryRoom', luxuryRoom);
+      dispatch(updateHotel(generatedHotel._id, data));
+    }
+  };
+
   useEffect(() => {
     if (generatedHotel) {
-      console.log(generatedHotel);
+      setHotelName(generatedHotel.hotelName);
+      setStreet(generatedHotel.address.addressline1);
+      setCity(generatedHotel.address.city);
+      setState(generatedHotel.address.state);
+      setPostalcode(generatedHotel.address.postalCode);
+      setCountry(generatedHotel.address.country);
+      setHotelDescription(generatedHotel.hotelDescription);
+      setSingleRooms(generatedHotel.availability[0].rooms);
+      setDoubleRooms(generatedHotel.availability[1].rooms);
+      setTripleRooms(generatedHotel.availability[2].rooms);
+      setLuxuryRooms(generatedHotel.availability[3].rooms);
     }
   }, [generatedHotel]);
   return (
@@ -146,7 +189,9 @@ const RegisterHotel = () => {
             placeholder="No Of Luxury Room"
           ></textarea>
 
-          <button className="add-hotel-in-list">Submit For Approval</button>
+          <button onClick={submitForApproval} className="add-hotel-in-list">
+            Submit For Approval
+          </button>
         </div>
       </div>
     </div>

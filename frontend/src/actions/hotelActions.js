@@ -11,6 +11,9 @@ import {
   HOTEL_CREATE_REQUEST,
   HOTEL_CREATE_SUCCESS,
   HOTEL_CREATE_FAIL,
+  HOTEL_UPDATE_REQUEST,
+  HOTEL_UPDATE_SUCCESS,
+  HOTEL_UPDATE_FAIL,
 } from '../constants/hotelConstants';
 import axios from 'axios';
 
@@ -79,7 +82,6 @@ export const generateHotelTemplate = () => async (dispatch, getState) => {
     } = getState();
     const config = {
       headers: {
-        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -87,6 +89,7 @@ export const generateHotelTemplate = () => async (dispatch, getState) => {
     if (userInfo.user.isOwner) {
       const { data } = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/owner`,
+        {},
         config
       );
       dispatch({ type: HOTEL_CREATE_SUCCESS, payload: data });
@@ -97,6 +100,7 @@ export const generateHotelTemplate = () => async (dispatch, getState) => {
       );
       dispatch({ type: HOTEL_CREATE_SUCCESS, payload: data });
     }
+    console.log(config);
   } catch (error) {
     dispatch({
       type: HOTEL_CREATE_FAIL,
@@ -107,3 +111,44 @@ export const generateHotelTemplate = () => async (dispatch, getState) => {
     });
   }
 };
+
+export const updateHotel =
+  (hotelId, formData) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: HOTEL_UPDATE_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      if (userInfo.user.isOwner) {
+        const { data } = await axios.put(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/${hotelId}/owner`,
+          formData,
+          config
+        );
+        dispatch({ type: HOTEL_UPDATE_SUCCESS, payload: data });
+      } else if (userInfo.user.isAdmin) {
+        const { data } = await axios.put(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/${hotelId}/admin`,
+          formData,
+          config
+        );
+        dispatch({ type: HOTEL_UPDATE_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({
+        type: HOTEL_UPDATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
