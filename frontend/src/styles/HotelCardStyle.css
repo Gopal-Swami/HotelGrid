@@ -65,14 +65,14 @@
   padding: 0rem 4rem;
 }
 
-.hotel-card-actions a {
+.hotel-card-actions span {
   padding: 0.5rem 2rem;
   background: #ff6a3d;
   color: #000;
   transition: background 0.5s ease;
 }
 
-.hotel-card-actions a:hover {
+.hotel-card-actions span:hover {
   background: #1a2238;
   color: #fff;
 }

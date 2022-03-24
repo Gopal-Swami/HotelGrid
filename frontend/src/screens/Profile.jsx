@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 const Profile = () => {
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
+  const [hotelId, setHotelId] = useState('');
   const { loading, error, userInfo } = userLogin;
   const [activeTab, setActiveTab] = useState('profile');
   useEffect(() => {
@@ -24,6 +25,11 @@ const Profile = () => {
       navigate('/');
     }
   }, [navigate, userInfo]);
+
+  const updateHotelMethod = (id) => {
+    setHotelId(id);
+    setActiveTab('registerhotel');
+  };
 
   return (
     <>
@@ -124,11 +130,13 @@ const Profile = () => {
           {activeTab === 'mybookings' && <Bookings />}
           {activeTab === 'notifications' && <Notifications />}
           {activeTab === 'users' && <Users />}
-          {activeTab === 'myproperties' && <MyProperties />}
+          {activeTab === 'myproperties' && (
+            <MyProperties updateHotelMethod={updateHotelMethod} />
+          )}
           {activeTab === 'enquiries' && <Enquiries />}
           {activeTab === 'responses' && <Responses />}
           {activeTab === 'help' && <Help />}
-          {activeTab === 'registerhotel' && <RegisterHotel />}
+          {activeTab === 'registerhotel' && <RegisterHotel hotelId={hotelId} />}
         </div>
       </div>
     </>
