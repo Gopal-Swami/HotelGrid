@@ -73,6 +73,7 @@ export const getHotelById = (id) => async (dispatch) => {
 export const generateHotelTemplate = () => async (dispatch, getState) => {
   try {
     dispatch({ type: HOTEL_CREATE_REQUEST });
+
     const {
       userLogin: { userInfo },
     } = getState();
@@ -82,6 +83,7 @@ export const generateHotelTemplate = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
+
     if (userInfo.user.isOwner) {
       const { data } = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/owner`,
