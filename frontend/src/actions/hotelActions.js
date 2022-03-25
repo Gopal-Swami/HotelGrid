@@ -5,6 +5,9 @@ import {
   TOP_HOTEL_LIST_REQUEST,
   TOP_HOTEL_LIST_SUCCESS,
   TOP_HOTEL_LIST_FAIL,
+  USER_HOTEL_LIST_REQUEST,
+  USER_HOTEL_LIST_SUCCESS,
+  USER_HOTEL_LIST_FAIL,
   HOTEL_BY_ID_REQUEST,
   HOTEL_BY_ID_SUCCESS,
   HOTEL_BY_ID_FAIL,
@@ -17,6 +20,9 @@ import {
   GALLARY_CREATE_REQUEST,
   GALLARY_CREATE_SUCCESS,
   GALLARY_CREATE_FAIL,
+  HOTEL_BLOCK_REQUEST,
+  HOTEL_BLOCK_SUCCESS,
+  HOTEL_BLOCK_FAIL,
 } from '../constants/hotelConstants';
 import axios from 'axios';
 
@@ -194,3 +200,63 @@ export const createGallaryImage =
       });
     }
   };
+
+export const listMyHotels = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_HOTEL_LIST_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/user/${userId}`,
+      config
+    );
+    dispatch({ type: USER_HOTEL_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_HOTEL_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const blockHotel = (hotelId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: HOTEL_BLOCK_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/${hotelId}/block`,
+      {},
+      config
+    );
+
+    dispatch({ type: HOTEL_BLOCK_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: HOTEL_BLOCK_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

@@ -5,6 +5,9 @@ import {
   TOP_HOTEL_LIST_REQUEST,
   TOP_HOTEL_LIST_SUCCESS,
   TOP_HOTEL_LIST_FAIL,
+  USER_HOTEL_LIST_REQUEST,
+  USER_HOTEL_LIST_SUCCESS,
+  USER_HOTEL_LIST_FAIL,
   HOTEL_BY_ID_REQUEST,
   HOTEL_BY_ID_SUCCESS,
   HOTEL_BY_ID_FAIL,
@@ -20,6 +23,9 @@ import {
   GALLARY_UPDATE_REQUEST,
   GALLARY_UPDATE_SUCCESS,
   GALLARY_UPDATE_FAIL,
+  HOTEL_BLOCK_REQUEST,
+  HOTEL_BLOCK_SUCCESS,
+  HOTEL_BLOCK_FAIL,
 } from '../constants/hotelConstants';
 
 export const hotelListReducer = (state = { hotels: [] }, action) => {
@@ -131,6 +137,38 @@ export const updateHotelGallaryReducer = (state = {}, action) => {
         gallary: action.payload,
       };
     case GALLARY_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const myUserHotelListReducer = (state = { hotels: [] }, action) => {
+  switch (action.type) {
+    case USER_HOTEL_LIST_REQUEST:
+      return { loading: true, hotels: [] };
+    case USER_HOTEL_LIST_SUCCESS:
+      return {
+        loading: false,
+        hotels: action.payload,
+      };
+    case USER_HOTEL_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const blockHotelReducer = (state = {}, action) => {
+  switch (action.type) {
+    case HOTEL_BLOCK_REQUEST:
+      return { loading: true };
+    case HOTEL_BLOCK_SUCCESS:
+      return {
+        loading: false,
+        message: action.payload.success,
+      };
+    case HOTEL_BLOCK_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

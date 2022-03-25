@@ -26,6 +26,12 @@ const Profile = () => {
     }
   }, [navigate, userInfo]);
 
+  const createActiveTab = (name) => {
+    if (name !== 'registerhotel') {
+      setHotelId('');
+    }
+    setActiveTab(name);
+  };
   const updateHotelMethod = (id) => {
     setHotelId(id);
     setActiveTab('registerhotel');
@@ -41,7 +47,7 @@ const Profile = () => {
                 <li>
                   <button
                     className="profile-buttons"
-                    onClick={(e) => setActiveTab('registerhotel')}
+                    onClick={(e) => createActiveTab('registerhotel')}
                   >
                     Register Hotel
                   </button>
@@ -50,7 +56,7 @@ const Profile = () => {
                 <li>
                   <button
                     className="profile-buttons"
-                    onClick={(e) => setActiveTab('myproperties')}
+                    onClick={(e) => createActiveTab('myproperties')}
                   >
                     My Properties
                   </button>
@@ -59,7 +65,7 @@ const Profile = () => {
                 <li>
                   <button
                     className="profile-buttons"
-                    onClick={(e) => setActiveTab('enquiries')}
+                    onClick={(e) => createActiveTab('enquiries')}
                   >
                     Enquiries
                   </button>
@@ -67,7 +73,7 @@ const Profile = () => {
                 <li>
                   <button
                     className="profile-buttons"
-                    onClick={(e) => setActiveTab('responses')}
+                    onClick={(e) => createActiveTab('responses')}
                   >
                     Respopnses
                   </button>
@@ -79,7 +85,7 @@ const Profile = () => {
             <li>
               <button
                 className="profile-buttons"
-                onClick={(e) => setActiveTab('mybookings')}
+                onClick={(e) => createActiveTab('mybookings')}
               >
                 My Bookings
               </button>
@@ -87,7 +93,7 @@ const Profile = () => {
             <li>
               <button
                 className="profile-buttons"
-                onClick={(e) => setActiveTab('notifications')}
+                onClick={(e) => createActiveTab('notifications')}
               >
                 Notifications
               </button>
@@ -95,7 +101,7 @@ const Profile = () => {
             <li>
               <button
                 className="profile-buttons"
-                onClick={(e) => setActiveTab('profile')}
+                onClick={(e) => createActiveTab('profile')}
               >
                 Update Profile
               </button>
@@ -106,7 +112,7 @@ const Profile = () => {
                 <li>
                   <button
                     className="profile-buttons"
-                    onClick={(e) => setActiveTab('users')}
+                    onClick={(e) => createActiveTab('users')}
                   >
                     Users
                   </button>
@@ -118,7 +124,7 @@ const Profile = () => {
             <li>
               <button
                 className="profile-buttons"
-                onClick={(e) => setActiveTab('help')}
+                onClick={(e) => createActiveTab('help')}
               >
                 Help
               </button>
@@ -136,7 +142,13 @@ const Profile = () => {
           {activeTab === 'enquiries' && <Enquiries />}
           {activeTab === 'responses' && <Responses />}
           {activeTab === 'help' && <Help />}
-          {activeTab === 'registerhotel' && <RegisterHotel hotelId={hotelId} />}
+          {activeTab === 'registerhotel' ? (
+            <RegisterHotel hotelId={hotelId} />
+          ) : hotelId.length !== 0 ? (
+            <RegisterHotel hotelId={hotelId} />
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </>

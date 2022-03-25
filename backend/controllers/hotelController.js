@@ -119,7 +119,9 @@ const updateHotel = asyncHandler(async (req, res) => {
   const hotel = await Hotel.findById(req.params.id);
 
   if (hotel) {
-    let hotelCover = 'images\\' + req.file.path.split('images')[1];
+    let hotelCover = req.file
+      ? 'images\\' + req.file.path.split('images')[1]
+      : '';
     hotel.hotelName = req.body.hotelName || hotel.hotelName;
     hotel.hotelDescription =
       req.body.hotelDescription || hotel.hotelDescription;
@@ -133,9 +135,17 @@ const updateHotel = asyncHandler(async (req, res) => {
     hotel.availability[1].rooms =
       req.body.doubleRoom || hotel.availability[1].rooms;
     hotel.availability[2].rooms =
-      req.body.TripleRoom || hotel.availability[2].rooms;
+      req.body.tripleRoom || hotel.availability[2].rooms;
     hotel.availability[3].rooms =
       req.body.luxuryRoom || hotel.availability[3].rooms;
+    hotel.availability[0].price =
+      req.body.singleRoomPrice || hotel.availability[0].price;
+    hotel.availability[1].price =
+      req.body.doubleRoomPrice || hotel.availability[1].price;
+    hotel.availability[2].price =
+      req.body.tripleRoomPrice || hotel.availability[2].price;
+    hotel.availability[3].price =
+      req.body.luxuryRoomPrice || hotel.availability[3].price;
     hotel.hotelPhotoUrl = req.file ? hotelCover : hotelAvatar;
     const updatedHotel = await hotel.save();
     res.json(updatedHotel);
@@ -154,7 +164,7 @@ const blockHotel = asyncHandler(async (req, res) => {
   if (hotel) {
     hotel.isBlocked = req.body.blockStatus;
     const updatedHotel = await hotel.save();
-    res.json(updatedHotel);
+    res.json({ updatedHotel, success: true });
   } else {
     res.status(404);
     throw new Error('Hotel Not Found');
