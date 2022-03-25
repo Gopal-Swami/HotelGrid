@@ -10,7 +10,10 @@ const createGallaryImage = asyncHandler(async (req, res) => {
 
   if (hotel) {
     if (req.file) {
-      hotel.gallary.push(req.file.path);
+      let hotelCover = req.file
+        ? 'images\\' + req.file.path.split('images')[1]
+        : '';
+      hotel.gallary.push(pathForImage);
       const updatedHotel = await hotel.save();
       res.status(201).json(updatedHotel);
     } else {
@@ -31,8 +34,11 @@ const updateGallaryImage = asyncHandler(async (req, res) => {
 
   if (hotel) {
     if (req.file) {
+      let hotelCover = req.file
+        ? 'images\\' + req.file.path.split('images')[1]
+        : '';
       let ind = hotel.gallary.indexOf(req.body.imgName);
-      hotel.gallary[ind] = req.file.path;
+      hotel.gallary[ind] = pathForImage;
       const updatedHotel = await hotel.save();
       res.status(201).json(updatedHotel);
     } else {
