@@ -7,6 +7,7 @@ import {
   listHotelById,
   createHotelReducer,
   updateHotelReducer,
+  createHotelGallaryReducer,
 } from './reducers/hotelReducers';
 import {
   userRegisterReducer,
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   updateUser: userUpdateProfileReducer,
   generateHotelTemplate: createHotelReducer,
   updateHotel: updateHotelReducer,
+  createGallary: createHotelGallaryReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

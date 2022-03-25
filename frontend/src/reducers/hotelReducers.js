@@ -14,6 +14,12 @@ import {
   HOTEL_UPDATE_REQUEST,
   HOTEL_UPDATE_SUCCESS,
   HOTEL_UPDATE_FAIL,
+  GALLARY_CREATE_REQUEST,
+  GALLARY_CREATE_SUCCESS,
+  GALLARY_CREATE_FAIL,
+  GALLARY_UPDATE_REQUEST,
+  GALLARY_UPDATE_SUCCESS,
+  GALLARY_UPDATE_FAIL,
 } from '../constants/hotelConstants';
 
 export const hotelListReducer = (state = { hotels: [] }, action) => {
@@ -93,6 +99,38 @@ export const updateHotelReducer = (state = {}, action) => {
         hotel: action.payload,
       };
     case HOTEL_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const createHotelGallaryReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GALLARY_CREATE_REQUEST:
+      return { loading: true };
+    case GALLARY_CREATE_SUCCESS:
+      return {
+        loading: false,
+        gallary: action.payload,
+      };
+    case GALLARY_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const updateHotelGallaryReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GALLARY_UPDATE_REQUEST:
+      return { loading: true };
+    case GALLARY_UPDATE_SUCCESS:
+      return {
+        loading: false,
+        gallary: action.payload,
+      };
+    case GALLARY_UPDATE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

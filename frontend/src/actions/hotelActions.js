@@ -14,6 +14,9 @@ import {
   HOTEL_UPDATE_REQUEST,
   HOTEL_UPDATE_SUCCESS,
   HOTEL_UPDATE_FAIL,
+  GALLARY_CREATE_REQUEST,
+  GALLARY_CREATE_SUCCESS,
+  GALLARY_CREATE_FAIL,
 } from '../constants/hotelConstants';
 import axios from 'axios';
 
@@ -145,6 +148,45 @@ export const updateHotel =
     } catch (error) {
       dispatch({
         type: HOTEL_UPDATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const createGallaryImage =
+  (hotelId, formData) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: GALLARY_CREATE_REQUEST });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      if (userInfo.user.isOwner) {
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/gallary/${hotelId}/owner`,
+          formData,
+          config
+        );
+        dispatch({ type: GALLARY_CREATE_SUCCESS, payload: data });
+      } else if (userInfo.user.isAdmin) {
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/gallary/${hotelId}/admin`,
+          formData,
+          config
+        );
+        dispatch({ type: GALLARY_CREATE_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({
+        type: GALLARY_CREATE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

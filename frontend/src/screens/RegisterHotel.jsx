@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/RegisterHotelStyle.css';
-import { generateHotelTemplate, updateHotel } from '../actions/hotelActions';
+import {
+  generateHotelTemplate,
+  updateHotel,
+  createGallaryImage,
+} from '../actions/hotelActions';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../components/Loader';
 
 const RegisterHotel = ({ hotelId }) => {
   const dispatch = useDispatch();
@@ -17,6 +22,7 @@ const RegisterHotel = ({ hotelId }) => {
   const [doubleRoom, setDoubleRooms] = useState(0);
   const [tripleRoom, setTripleRooms] = useState(0);
   const [luxuryRoom, setLuxuryRooms] = useState(0);
+  const [gallaryImage, setGallaryImage] = useState(null);
   const sampleHotel = useSelector((state) => state.generateHotelTemplate);
 
   const {
@@ -24,6 +30,14 @@ const RegisterHotel = ({ hotelId }) => {
     error: generateHotelError,
     hotel: generatedHotel,
   } = sampleHotel;
+
+  const gallaryStatus = useSelector((state) => state.createGallary);
+
+  const {
+    loading: gallaryLoading,
+    error: gallaryError,
+    gallary: hotelWithGallary,
+  } = gallaryStatus;
 
   const generateSampleHotel = () => {
     dispatch(generateHotelTemplate());
@@ -62,6 +76,14 @@ const RegisterHotel = ({ hotelId }) => {
     }
   };
 
+  const addGallary = () => {
+    if (gallaryImage !== null) {
+      const data = new FormData();
+      data.append('file', gallaryImage);
+      dispatch(createGallaryImage(generatedHotel._id, data));
+    }
+  };
+
   useEffect(() => {
     if (generatedHotel) {
       setHotelName(generatedHotel.hotelName);
@@ -80,7 +102,15 @@ const RegisterHotel = ({ hotelId }) => {
   return (
     <div className="hotel-register-container">
       <button onClick={generateSampleHotel} className="generate-sample-hotel">
-        Generate Sample
+        {generateHotelLoading ? (
+          <Loader />
+        ) : generateHotelError ? (
+          generateHotelError
+        ) : generatedHotel ? (
+          'Sample Generated. Please Add Details To Register'
+        ) : (
+          'Generate Sample'
+        )}
       </button>
       <div className="hotel-image">
         <label htmlFor="hotel-cover">Select Cover</label>
@@ -100,12 +130,23 @@ const RegisterHotel = ({ hotelId }) => {
           Select Image To Add In Gallary
         </label>
         <input
+          onChange={(e) => setGallaryImage(e.target.files[0])}
           type="file"
           className="gallary-image-picker"
           id="gallary-image-picker"
         />
         <label htmlFor="gallary-message"></label>
-        <button className="add-image-to-gallary">Add</button>
+        <button onClick={addGallary} className="add-image-to-gallary">
+          {gallaryLoading ? (
+            <Loader />
+          ) : gallaryError ? (
+            gallaryError
+          ) : hotelWithGallary ? (
+            'Image Added, Select More To Add'
+          ) : (
+            'Add'
+          )}
+        </button>
       </div>
       <div className="hotel-fields">
         <div className="hotel-form-fields">

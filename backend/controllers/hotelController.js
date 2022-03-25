@@ -119,6 +119,7 @@ const updateHotel = asyncHandler(async (req, res) => {
   const hotel = await Hotel.findById(req.params.id);
 
   if (hotel) {
+    let hotelCover = 'images\\' + req.file.path.split('images')[1];
     hotel.hotelName = req.body.hotelName || hotel.hotelName;
     hotel.hotelDescription =
       req.body.hotelDescription || hotel.hotelDescription;
@@ -135,7 +136,7 @@ const updateHotel = asyncHandler(async (req, res) => {
       req.body.TripleRoom || hotel.availability[2].rooms;
     hotel.availability[3].rooms =
       req.body.luxuryRoom || hotel.availability[3].rooms;
-    hotel.hotelPhotoUrl = req.file ? req.file.path : hotelAvatar;
+    hotel.hotelPhotoUrl = req.file ? hotelCover : hotelAvatar;
     const updatedHotel = await hotel.save();
     res.json(updatedHotel);
   } else {
