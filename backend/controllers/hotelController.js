@@ -123,6 +123,7 @@ const updateHotel = asyncHandler(async (req, res) => {
       ? 'images\\' + req.file.path.split('images')[1]
       : '';
     hotel.hotelName = req.body.hotelName || hotel.hotelName;
+    hotel.isBlocked = true;
     hotel.hotelDescription =
       req.body.hotelDescription || hotel.hotelDescription;
     hotel.address.addressline1 = req.body.addressline1;
