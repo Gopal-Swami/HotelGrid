@@ -25,6 +25,22 @@ const getHotels = asyncHandler(async (req, res) => {
   res.json({ hotels, page, pages: Math.ceil(count / pageSize) });
 });
 
+// @desc fetch all Hotels
+// @route GET api/v1/hotels
+// @access public
+
+const getHotelsByCity = asyncHandler(async (req, res) => {
+  const pageSize = 10;
+  const page = Number(req.query.pageNumber) || 1;
+
+  const hotels = await Hotel.find({
+    'address.city': { $regex: req.query.city, $options: 'i' },
+  })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+  res.json({ hotels, page });
+});
+
 // @desc fetch single hotel
 // @route GET api/v1/hotels/:id
 // @access public
@@ -229,4 +245,5 @@ export {
   deleteHotel,
   blockHotel,
   getUserHotels,
+  getHotelsByCity,
 };

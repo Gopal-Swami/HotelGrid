@@ -10,11 +10,13 @@ import {
   createHotel,
   createHotelReview,
   blockHotel,
+  getHotelsByCity,
 } from '../controllers/hotelController.js';
 import { protect, admin, owner } from '../middlewares/authMiddleware.js';
 import { upload } from '../controllers/fileUploadController.js';
 
 router.route('/').get(getHotels);
+router.route('/city').get(getHotelsByCity);
 router.route('/admin').post(protect, admin, upload.single('file'), createHotel);
 router.route('/owner').post(protect, owner, upload.single('file'), createHotel);
 router.route('/user/:id').get(protect, owner, getUserHotels);
