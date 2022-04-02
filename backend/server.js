@@ -29,16 +29,18 @@ app.use('/api/v1/gallary', gallaryRoutes);
 app.use('/api/v1/bookings', bookingRoutes);
 app.use('/api/v1/enquiries', enquiryRoutes);
 
-// app.use('/api/upload', uploadRoutes);
-
-app.get('/', (req, res) => {
-  res.send('API is running');
-});
-
 const __dirname = path.resolve();
-app.use('/backend', () => {
-  express.static(path.join(__dirname, '/backend'));
-});
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')));
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  );
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running');
+  });
+}
 
 //Error Handling Middle Ware
 app.use(notFound);
