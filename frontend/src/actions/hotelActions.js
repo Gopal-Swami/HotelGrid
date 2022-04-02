@@ -32,7 +32,7 @@ export const listHotels =
     try {
       dispatch({ type: HOTEL_LIST_REQUEST });
       const { data } = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/hotels?keyword=${keyword}&pageNumber=${pageNumber}`
+        `/api/v1/hotels?keyword=${keyword}&pageNumber=${pageNumber}`
       );
       dispatch({ type: HOTEL_LIST_SUCCESS, payload: data });
     } catch (error) {
@@ -49,9 +49,7 @@ export const listHotels =
 export const listTopHotels = () => async (dispatch) => {
   try {
     dispatch({ type: TOP_HOTEL_LIST_REQUEST });
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/top`
-    );
+    const { data } = await axios.get(`/api/v1/hotels/top`);
     dispatch({ type: TOP_HOTEL_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -67,9 +65,7 @@ export const listTopHotels = () => async (dispatch) => {
 export const getHotelById = (id) => async (dispatch) => {
   try {
     dispatch({ type: HOTEL_BY_ID_REQUEST });
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/${id}`
-    );
+    const { data } = await axios.get(`/api/v1/hotels/${id}`);
     dispatch({ type: HOTEL_BY_ID_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -96,17 +92,10 @@ export const generateHotelTemplate = () => async (dispatch, getState) => {
     };
 
     if (userInfo.user.isOwner) {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/owner`,
-        {},
-        config
-      );
+      const { data } = await axios.post(`/api/v1/hotels/owner`, {}, config);
       dispatch({ type: HOTEL_CREATE_SUCCESS, payload: data });
     } else if (userInfo.user.isAdmin) {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/admin`,
-        config
-      );
+      const { data } = await axios.post(`/api/v1/hotels/admin`, config);
       dispatch({ type: HOTEL_CREATE_SUCCESS, payload: data });
     }
     console.log(config);
@@ -138,14 +127,14 @@ export const updateHotel =
 
       if (userInfo.user.isOwner) {
         const { data } = await axios.put(
-          `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/${hotelId}/owner`,
+          `/api/v1/hotels/${hotelId}/owner`,
           formData,
           config
         );
         dispatch({ type: HOTEL_UPDATE_SUCCESS, payload: data });
       } else if (userInfo.user.isAdmin) {
         const { data } = await axios.put(
-          `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/${hotelId}/admin`,
+          `/api/v1/hotels/${hotelId}/admin`,
           formData,
           config
         );
@@ -177,14 +166,14 @@ export const createGallaryImage =
       };
       if (userInfo.user.isOwner) {
         const { data } = await axios.post(
-          `${process.env.REACT_APP_BASE_URL}/api/v1/gallary/${hotelId}/owner`,
+          `/api/v1/gallary/${hotelId}/owner`,
           formData,
           config
         );
         dispatch({ type: GALLARY_CREATE_SUCCESS, payload: data });
       } else if (userInfo.user.isAdmin) {
         const { data } = await axios.post(
-          `${process.env.REACT_APP_BASE_URL}/api/v1/gallary/${hotelId}/admin`,
+          `/api/v1/gallary/${hotelId}/admin`,
           formData,
           config
         );
@@ -213,10 +202,7 @@ export const listMyHotels = (userId) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/user/${userId}`,
-      config
-    );
+    const { data } = await axios.get(`/api/v1/hotels/user/${userId}`, config);
     dispatch({ type: USER_HOTEL_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -244,7 +230,7 @@ export const blockHotel = (hotelId) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/${hotelId}/block`,
+      `/api/v1/hotels/${hotelId}/block`,
       {},
       config
     );

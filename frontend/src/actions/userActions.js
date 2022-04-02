@@ -24,11 +24,7 @@ export const register = (formData) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      `${process.env.REACT_APP_BASE_URL}/api/v1/users`,
-      formData,
-      config
-    );
+    const { data } = await axios.post(`/api/v1/users`, formData, config);
 
     dispatch({
       type: USER_REGISTER_SUCCESS,
@@ -65,7 +61,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `${process.env.REACT_APP_BASE_URL}/api/v1/users/login`,
+      `/api/v1/users/login`,
       { email, password },
       config
     );
@@ -108,11 +104,7 @@ export const updateUserProfile = (formData) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(
-      `${process.env.REACT_APP_BASE_URL}/api/v1/users/profile`,
-      formData,
-      config
-    );
+    const { data } = await axios.put(`/api/v1/users/profile`, formData, config);
 
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,

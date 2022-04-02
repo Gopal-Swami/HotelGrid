@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2c40b3d7.css",
+    "main.js": "/static/js/main.95c6a27b.js",
+    "static/media/HotelGRID.gif": "/static/media/HotelGRID.7c0dccf589d3d38ca5f6.gif",
+    "static/media/pune.jpg": "/static/media/pune.30b28381c6928de2664c.jpg",
+    "static/media/delhi.jpg": "/static/media/delhi.d44989f033b1a0012e9b.jpg",
+    "static/media/kolkata.jpg": "/static/media/kolkata.b1147caeb03471e07e5f.jpg",
+    "static/media/tripleroom.jpg": "/static/media/tripleroom.0ae85893411501a11884.jpg",
+    "static/media/luxuryroom.jpg": "/static/media/luxuryroom.de08b57d9c3a24f2828b.jpg",
+    "static/media/mumbai.jpg": "/static/media/mumbai.82524b9fb94c0a6495e4.jpg",
+    "static/media/singleroom.jpg": "/static/media/singleroom.19eb5a58f12a64ecdd25.jpg",
+    "static/media/doubleroom.jpg": "/static/media/doubleroom.482706409d449cb55b40.jpg",
+    "static/media/Signup.svg": "/static/media/Signup.7fdd18582d68be7564ebd1d131f93d50.svg",
+    "static/media/homepageSearch.svg": "/static/media/homepageSearch.1c91388fc46096cc070858497485c479.svg",
+    "static/media/login.svg": "/static/media/login.b3b4c225746e888b3cd163607bd69308.svg",
+    "index.html": "/index.html",
+    "main.2c40b3d7.css.map": "/static/css/main.2c40b3d7.css.map",
+    "main.95c6a27b.js.map": "/static/js/main.95c6a27b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2c40b3d7.css",
+    "static/js/main.95c6a27b.js"
+  ]
+}
