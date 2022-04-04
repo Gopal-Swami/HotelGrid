@@ -229,34 +229,34 @@ export const listMyHotels = (userId) => async (dispatch, getState) => {
   }
 };
 
-export const blockHotel = (hotelId) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: HOTEL_BLOCK_REQUEST });
+export const blockHotel =
+  (hotelId, blockStatus) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: HOTEL_BLOCK_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-    const { data } = await axios.put(
-      `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/${hotelId}/block`,
-      {},
-      config
-    );
+      const { data } = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/hotels/${hotelId}/block`,
+        { blockStatus },
+        config
+      );
 
-    dispatch({ type: HOTEL_BLOCK_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: HOTEL_BLOCK_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({ type: HOTEL_BLOCK_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: HOTEL_BLOCK_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

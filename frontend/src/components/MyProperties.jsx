@@ -57,10 +57,17 @@ const MyProperties = ({ updateHotelMethod }) => {
                         <Loader />
                       ) : blockHotelError ? (
                         blockHotelError
-                      ) : (
+                      ) : !hotel.isBlocked ? (
                         <i
                           className="fa-solid fa-ban"
-                          onClick={(e) => dispatch(blockHotel(hotel._id))}
+                          onClick={(e) => dispatch(blockHotel(hotel._id, true))}
+                        ></i>
+                      ) : (
+                        <i
+                          class="fa-solid fa-circle-check"
+                          onClick={(e) =>
+                            dispatch(blockHotel(hotel._id, false))
+                          }
                         ></i>
                       )}
                     </td>

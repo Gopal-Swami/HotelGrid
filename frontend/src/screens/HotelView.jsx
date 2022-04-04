@@ -39,22 +39,25 @@ const HotelView = () => {
                 {hotel.address.addressline1}, {hotel.address.city},
                 {hotel.address.state}, {hotel.address.postalCode}
               </p>
-              <Gallary gallaryItems={hotel.gallary} />
+              <Gallary
+                hotelCover={hotel.hotelPhotoUrl}
+                gallaryItems={hotel.gallary}
+              />
               <div className="facility-container">
                 <span>
-                  <i class="fa-solid fa-wifi"></i>
+                  <i className="fa-solid fa-wifi"></i>
                   Wifi
                 </span>
                 <span>
-                  <i class="fa-solid fa-tv"></i>
+                  <i className="fa-solid fa-tv"></i>
                   TV
                 </span>
                 <span>
-                  <i class="fa-solid fa-wind"></i>
+                  <i className="fa-solid fa-wind"></i>
                   Air Conditionar
                 </span>
                 <span>
-                  <i class="fa-solid fa-check-double"></i> Sanitized
+                  <i className="fa-solid fa-check-double"></i> Sanitized
                 </span>
               </div>
               <div className="submit-feedback">
@@ -72,33 +75,32 @@ const HotelView = () => {
               </div>
             </div>
             <div className="facility-rooms">
-              {hotel.availability.map((aval) => (
-                <div className="hotel-room-card">
+              {hotel.availability.map((aval, index) => (
+                <div key={index} className="hotel-room-card">
                   <div className="room-description">
                     <h3>
                       {aval.type} At ₹ {aval.price}
                     </h3>
-                    <i class="fa-solid fa-bed"></i> 1 large double bed ,<br />
+                    <i className="fa-solid fa-bed"></i> 1 large double bed ,
+                    <br />
                     {aval.type !== 'Single' ? (
                       <>
-                        <i class="fa-solid fa-wind"></i>Air conditioning,
+                        <i className="fa-solid fa-wind"></i>Air conditioning,
                         <br />
-                        <i class="fa-solid fa-wifi"></i> Free WiFi,
+                        <i className="fa-solid fa-wifi"></i> Free WiFi,
                         <br />
                       </>
                     ) : (
                       ''
                     )}
-                    <i class="fa-solid fa-tv"></i> Flat-screen TV,
+                    <i className="fa-solid fa-tv"></i> Flat-screen TV,
                     <br />
-                    <i class="fa-solid fa-toilet-paper"></i> Free toiletries
+                    <i className="fa-solid fa-toilet-paper"></i> Free toiletries
                   </div>
 
                   <div className="hotel-no-of-rooms-to-book">
                     <select name="no-of-rooms" id="no-of-rooms">
-                      <option value="None" selected>
-                        No of Rooms
-                      </option>
+                      <option defaultValue="None">No of Rooms</option>
                       {[...Array(aval.rooms).keys()].map((x) => (
                         <option key={x + 1} value={x + 1}>
                           {x + 1}

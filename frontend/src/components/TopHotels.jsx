@@ -24,7 +24,10 @@ const TopHotels = () => {
       {topHotelsLoading ? (
         <Loader />
       ) : (
-        topHotels.map((hotel) => <HotelCard key={hotel._id} hotel={hotel} />)
+        topHotels.map(
+          (hotel) =>
+            !hotel.isBlocked && <HotelCard key={hotel._id} hotel={hotel} />
+        )
       )}
     </div>
   );
